@@ -20,15 +20,27 @@ class MainActivity : AppCompatActivity() {
 
         spnColors= findViewById(R.id.spnColors)
         body= findViewById(R.id.body)
-        val colors= arrayOf("Select a color", "Green", "White", "Black", "Blue", "DarkGray", "Red", "Yellow", "Cyan", "Magenta", "Gray")
+        val colors= arrayOf("Select a color", "Green", "White", "Black", "Blue", "DarkGray", "Red", "Yellow", "Cyan", "Magenta", "Aqua", "Fuchsia", "Lime", "Maroon", "Navy", "Olive", "Purple", "Silver", "Teal")
 
         spnColors.adapter= ColorAdapter(this@MainActivity, colors)
         spnColors.onItemSelectedListener= object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 val selectedColor = p0!!.getItemAtPosition(p2).toString()
-                if (selectedColor != "Select a color") {
-                    body.setBackgroundColor(Color.parseColor(selectedColor))
+                if (selectedColor == "Select a color") {
+                    body.setBackgroundColor(Color.TRANSPARENT)
                 }
+                else{
+                    body.setBackgroundColor(Color.parseColor(selectedColor))
+
+
+                    if(Color.parseColor(selectedColor) == Color.WHITE){
+                        spnColors.setBackgroundColor(Color.BLACK)
+                    }
+                    else{
+                        spnColors.setBackgroundColor(Color.WHITE)
+                    }
+                }
+
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -67,7 +79,9 @@ class ColorAdapter(_context: Context, _colors: Array<String>): BaseAdapter()
             textView= TextView(context)
         }
 
-        textView.setBackgroundColor(Color.TRANSPARENT)
+        textView.text = colors[p0]
+        textView.textSize = 20f
+        textView.setPadding(5, 5, 0, 5)
         return textView
     }
     override fun getDropDownView(p0: Int, p1: View?, p2: ViewGroup?): View {
